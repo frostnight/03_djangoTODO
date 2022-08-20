@@ -1,3 +1,5 @@
 .env
 # Project exclude paths
 /myvenv/
+
+.idea
