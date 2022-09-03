@@ -1,7 +1,9 @@
 .env
 # Project exclude paths
 /myvenv/
+/venv/
 
 .idea
 db.sqlite3
 /todo/migrations
+/drf_example/migrations
