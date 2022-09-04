@@ -1,25 +1,51 @@
-from rest_framework import serializers
+from rest_framework import serializers, mixins, generics, viewsets
 from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
-
-    # def create(self, validated_data):
-    #     return Book.objects.create(**validated_data)
-    #
-    # def update(self, instance: Book, validated_data: dict):
-    #     instance = validated_data.get('bid', instance.bid)
-    #     instance = validated_data.get('title', instance.title)
-    #     instance = validated_data.get('author', instance.author)
-    #     instance = validated_data.get('category', instance.category)
-    #     instance = validated_data.get('pages', instance.pages)
-    #     instance = validated_data.get('price', instance.price)
-    #     instance = validated_data.get('published_date', instance.published_date)
-    #     instance = validated_data.get('description', instance.description)
-    #     instance.save()
-    #
-    #     return instance
-
     class Meta:
         model = Book
         fields = ['bid', 'title', 'author', 'category', 'pages', 'price', 'published_date', 'description']
+
+
+class BooksAPIMixins(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class BookAPIMixins(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'bid'
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class BooksAPIGenerics(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookAPIGenerics(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'bid'
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
