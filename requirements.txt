@@ -1,7 +1,9 @@
 asgiref==3.5.2
 Django==3.2.15
 django-environ==0.9.0
+djangorestframework==3.13.1
+future==0.18.2
 pytz==2022.2.1
+serializers==0.2.4
 sqlparse==0.4.2
-
-djangorestframework~=3.13.1
+typing_extensions==4.3.0
