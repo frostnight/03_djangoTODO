@@ -7,3 +7,4 @@
 db.sqlite3
 /todo/migrations
 /drf_example/migrations
+/drf_todo/migrations

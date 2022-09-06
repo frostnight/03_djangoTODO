@@ -8,4 +8,4 @@ ALLOWED_HOSTS = ['127.0.0.1']
 TIME_ZONE = 'Asia/Seoul'
 
 # Page
-132p
+138p
